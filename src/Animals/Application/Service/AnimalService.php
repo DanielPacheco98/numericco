@@ -11,7 +11,7 @@ class AnimalService {
 
     public function __construct() {
         $this->client = new Client([
-            'base_uri' => 'https://dogapi.dog/docs/api-v2'
+            'base_uri' => 'https://dogapi.dog'
         ]);
     }
 
@@ -20,13 +20,13 @@ class AnimalService {
      * @throws GuzzleException
      */
     private function getBreedIdentifiers(): array {
-        $response = $this->client->get('/breeds');
+        $response = $this->client->get('/api/v2/breeds');
 
         $breedsData = json_decode($response->getBody()->getContents(), true);
 
         $identifiers = [];
 
-        foreach ($breedsData as $breed) {
+        foreach ($breedsData['data'] as $breed) {
             $identifiers[] = $breed['id'];
         }
 
@@ -40,11 +40,11 @@ class AnimalService {
      */
     private function getBreedInfo(string $identifier): array {
 
-        $response = $this->client->get('/breeds/'. $identifier);
+        $response = $this->client->get('/api/v2/breeds/'. $identifier);
 
         $breedData = json_decode($response->getBody()->getContents(), true);
 
-        return $breedData['attributes'];
+        return $breedData['data']['attributes'];
     }
 
     /**
@@ -60,7 +60,7 @@ class AnimalService {
 
         foreach ($breedIdentifiers as $breedIdentifier) {
             $breedInfo = $this->getBreedInfo($breedIdentifier);
-            if ($breedInfo['min_life'] >= $minLife) {
+            if ($breedInfo['life']['min'] >= $minLife) {
                 $result[$breedIdentifier] = $breedInfo;
             }
         }

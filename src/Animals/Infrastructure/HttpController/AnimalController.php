@@ -3,22 +3,19 @@
 namespace App\Animals\Infrastructure\HttpController;
 use App\Animals\Application\Service\AnimalService;
 use GuzzleHttp\Exception\GuzzleException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/animals")
- */
-class AnimalController {
-
+class AnimalController extends AbstractController {
     /**
      * @param Request $request
      * @return JsonResponse
-     * @Route("", methods={"GET"})
      * @throws GuzzleException
      */
+    #[Route('/animals', name: 'animals', methods: ['GET'])]
     public function getAnimalsByMinLife(Request $request): JsonResponse {
 
         $service = new AnimalService();

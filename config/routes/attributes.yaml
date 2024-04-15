@@ -1,0 +1,6 @@
+animal_controller:
+  resource: ../../src/Animals/Infrastructure/HttpController/
+  type: attribute
+kernel:
+  resource: ../../src/Kernel.php
+  type: attribute

@@ -1,9 +1,0 @@
-animal_controller:
-    resource: ../src/Animals/Infrastructure/HttpController/
-    type: annotation
-    prefix: /animals
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
